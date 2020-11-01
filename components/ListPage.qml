@@ -5,9 +5,23 @@ import QtQuick 2.12
     id: listpage     
     property var itemWidth : 600/itemsRow
     property var itemHeight : itemWidth
-
-
-
+    Keys.onPressed: {
+      //Back to Home            
+      if (api.keys.isCancel(event)) {
+          event.accepted = true;
+          // gameView.model = currentCollection.games
+          // gameViewStyle = 'standard'
+          searchValue=''
+          // header__search_input.focus = false
+          // gameView.focus = true 
+          
+          header__search_input.text='Search...'
+          navigate('HomePage');
+          return;
+      }  
+      
+    }
+ 
     Rectangle {
         id: header
         color: Qt.rgba(0, 0, 0, .5)
@@ -168,7 +182,7 @@ import QtQuick 2.12
         
              
             
-            GridView {
+            ListView {
                 id: gameView
                 width: parent.width;
                 height: parent.height
@@ -184,17 +198,18 @@ import QtQuick 2.12
                 snapMode: ListView.SnapOneItem
                 highlightRangeMode: ListView.StrictlyEnforceRange
                 
-                Keys.onUpPressed:       { moveCurrentIndexUp();navSound.play(); }
-                Keys.onDownPressed:     { moveCurrentIndexDown();navSound.play(); }
-                Keys.onLeftPressed:     { moveCurrentIndexLeft();navSound.play(); }
-                Keys.onRightPressed:    { moveCurrentIndexRight();navSound.play(); }
-                cellWidth: itemWidth
-                cellHeight: itemHeight
+                // Keys.onUpPressed:       { moveCurrentIndexUp();navSound.play(); }
+                // Keys.onDownPressed:     { moveCurrentIndexDown();navSound.play(); }
+                // Keys.onLeftPressed:     { moveCurrentIndexLeft();navSound.play(); }
+                // Keys.onRightPressed:    { moveCurrentIndexRight();navSound.play(); }
+                // cellWidth: itemWidth
+                // cellHeight: itemHeight
                 
                 Component {
                     id: gameViewDelegate 
                     Item
                     {
+                      height:20
                       id: delegateContainer
                       property bool selected: delegateContainer.GridView.isCurrentItem
                       property var gameViewStyle : 'standard'
@@ -205,20 +220,6 @@ import QtQuick 2.12
                             currentGameIndex = index
                             launchSound.play()
                             currentGame.launch();                            
-                            return;
-                        }  
-                        
-                        //Back to Home            
-                        if (api.keys.isCancel(event)) {
-                            event.accepted = true;
-                            // gameView.model = currentCollection.games
-                            // gameViewStyle = 'standard'
-                            searchValue=''
-                            // header__search_input.focus = false
-                            // gameView.focus = true 
-                            
-                            header__search_input.text='Search...'
-                            navigate('HomePage');
                             return;
                         }  
                         
@@ -279,75 +280,29 @@ import QtQuick 2.12
                                     
                       }                          
                     
+                    
+                    
                       Rectangle{
                         color:"transparent"
-                        width: itemWidth
-                        height: itemHeight
+                        height: 20
                                                 
-                        Image {
-                            id: game_screenshot
-                            width: itemWidth    
-                            height:   itemHeight
-                            //fillMode: Image.PreserveAspectFit
-                            asynchronous: true    
-                            source: {
-                                if (currentCollection.shortName !== "android") {
-                                    if (modelData.assets.screenshots[0]) {
-                                        return modelData.assets.screenshots[0]
-                                    }
-                                    return ""
-                                }
-                                return ""
-                            }                                                               
-                        }      
-                        
-                        Image {
-                            id: gamelogo
-    
-                            width: parent.width
-                            height: parent.height
-                            anchors {
-                                fill: parent
-                                margins: vpx(6)
-                            }
-    
-                            asynchronous: true
-    
-                            //opacity: 0
-                            source: {
-                                if (currentCollection.shortName == "android") {
-                                    if (modelData.assets.boxFront) {
-                                        return modelData.assets.boxFront
-                                    }
-                                    return ""
-                                }
-                                if (modelData.assets.logo) {
-                                    return modelData.assets.logo
-                                }
-                                return ""
-                            }
-                            sourceSize { width: 256; height: 256 }
-                            fillMode: Image.PreserveAspectFit
-                            smooth: true
-                            visible: gamelogo.source !== ""
-                            z:8
+                        Text{
+                          text: currentCollection.name
+                          anchors.left: header__system_logo.right
+                          anchors.leftMargin: 12
+                          color: selected ? "orange" : "white"
+                          font.pixelSize: 22
+                          anchors.verticalCenter: parent.verticalCenter
+                          width:300       
+                          elide: Text.ElideRight       
                         }
-                                                                       
-                        Rectangle{
-                          id: game__is_selected
-                          width:parent.width
-                          height:parent.height
-                          color:"transparent"
-                          opacity:1     
-                          border.color: selected ? "#10adc5" : wrapperCSS.background
-                          border.width: 4                                                
-                        }
+
                         
                         
                         Canvas {
                             id: game__is_fav
                             // canvas size
-                            width: 60; height: 60;
+                            width: 10; height: 10;
                             opacity:0.8
                             anchors {
                                 left: parent.left; 

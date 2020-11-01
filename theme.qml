@@ -17,12 +17,18 @@ FocusScope {
   Component.onCompleted: homeSound.play()
   
   //System index
-  property var currentCollectionIndex : 0
+  property var currentCollectionIndex : 3
   property var currentCollection: allCollections[currentCollectionIndex]
   
   //Games index
   property var currentGameIndex: 0
-  property var currentGame: {return currentCollection.games.get(currentGameIndex)}
+  property var currentGame: {
+      if (currentCollection.shortName === "all-favorites")
+          return api.allGames.get(allFavorites.mapToSource(currentGameIndex))
+      if (currentCollection.shortName === "all-lastplayed")
+          return api.allGames.get(allLastPlayed.mapToSource(currentGameIndex))
+      return currentCollection.games.get(currentGameIndex)
+  }
   
   property var allCollections: {
       let collections = api.collections.toVarArray()
@@ -34,7 +40,7 @@ FocusScope {
   
   FontLoader { id: titleFont; source: "assets/fonts/Nintendo_Switch_UI_Font.ttf" }
   
-  property var currentPage : 'HomePage';
+  property var currentPage : 'ListPage';
   
   property var themeLight : {
       "background": "#ebebeb",
@@ -82,7 +88,7 @@ FocusScope {
   
   property var footerCSS : {
       "width": wrapperCSS.width,
-      "height": 0,
+      "height": 50,
       "background": "transparent",
       
   }    
@@ -96,7 +102,7 @@ FocusScope {
   
   property var systemGradients : {
       "snes": "#b95264",
-      "gb": "#3eb2a3",
+      "gb": "#acc641",
       "mastersystem": "#23294c",
       "genesis":"#175498"
   }   

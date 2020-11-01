@@ -5,6 +5,7 @@ import QtQuick 2.12
         width: footerCSS.width
         height: footerCSS.height
         anchors.top: main.bottom
+        anchors.topMargin: -50
         Rectangle{
           id: footer__border
           anchors.top: parent.top
@@ -14,18 +15,6 @@ import QtQuick 2.12
           height:1
           color: theme.text
         }
-        
-        Image {
-            id: rp2
-            width: 36
-            fillMode: Image.PreserveAspectFit
-            source: "../assets/icons/"+ theme.footer_icon
-            asynchronous: true        
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: 42
-            anchors.topMargin: 14
-        }      
         
         
         Rectangle{
@@ -43,14 +32,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                                 
                     Text{
                          text:"A"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -73,14 +62,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                                 
                     Text{
                          text:"B"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -102,14 +91,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                                 
                     Text{
                          text:"Y"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -131,14 +120,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                     visible: currentPage === 'ListPage' ? 1 : 0            
                     Text{
                          text:"X"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -160,14 +149,14 @@ import QtQuick 2.12
             //     Rectangle{
             //         height:20
             //         width:20
-            //         color:"#444"
+            //         color:"#fff"
             //         radius:20
             //         anchors.verticalCenter: parent.verticalCenter
             //         anchors.right: parent.right  
             //         visible: currentPage === 'HomePage' ? 1 : 0            
             //         Text{
             //              text:"X"
-            //              color:"white"                    
+            //              color:"#444"                    
             //              anchors.verticalCenter: parent.verticalCenter
             //              anchors.horizontalCenter: parent.horizontalCenter
             //         }
@@ -190,14 +179,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                     visible: currentPage === 'ListPage' ? 1 : 0            
                     Text{
                          text:"R1"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -221,14 +210,14 @@ import QtQuick 2.12
                 Rectangle{
                     height:20
                     width:20
-                    color:"#444"
+                    color:"#fff"
                     radius:20
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right  
                     visible: currentPage === 'ListPage' ? 1 : 0            
                     Text{
                          text:"L1"
-                         color:"white"                    
+                         color:"#444"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
                     }

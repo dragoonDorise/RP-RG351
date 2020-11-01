@@ -134,6 +134,14 @@ import QtQuick 2.12
                                     asynchronous: true                                       
                                 }     
                                 
+                                Rectangle{
+                                  id: systems__overlay
+                                  width: parent.width
+                                  height: parent.height
+                                  color:"#000"
+                                  opacity:.2
+                                }
+                                
                                   Canvas {
                                       id: leftColor
                                       // canvas size
@@ -175,7 +183,7 @@ import QtQuick 2.12
                                           var ctx = getContext("2d")
                                           var gradient = ctx.createLinearGradient(100,0,100,600)
                                           gradient.addColorStop(0, "transparent")
-                                          gradient.addColorStop(.7, "black") 
+                                          gradient.addColorStop(.7, Qt.darker(systemGradients[modelData.shortName])) 
                                           // setup the fill
                                           ctx.fillStyle = gradient
                                           // begin a new path to draw
@@ -238,7 +246,7 @@ import QtQuick 2.12
                                           var ctx = getContext("2d")
                                           var gradient = ctx.createLinearGradient(100,0,100,600)
                                           gradient.addColorStop(0, "transparent")
-                                          gradient.addColorStop(.7, "black") 
+                                          gradient.addColorStop(.7, Qt.darker(systemGradients[modelData.shortName])) 
                                           // setup the fill
                                           ctx.fillStyle = gradient
                                           // begin a new path to draw
@@ -263,7 +271,7 @@ import QtQuick 2.12
                                       width: 200    
                                       sourceSize { width: 200; }                                    
                                       fillMode: Image.PreserveAspectCrop
-                                      source: "../assets/images/logos/"+modelData.shortName+".svg"
+                                      source: "../assets/images/logos/"+modelData.shortName+".png"
                                       asynchronous: true      
                                       anchors.bottom: parent.bottom                                 
                                       anchors.right: parent.right    
