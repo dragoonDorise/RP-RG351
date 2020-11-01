@@ -17,7 +17,7 @@ FocusScope {
   Component.onCompleted: homeSound.play()
   
   //System index
-  property var currentCollectionIndex : 3
+  property var currentCollectionIndex : 0
   property var currentCollection: allCollections[currentCollectionIndex]
   
   //Games index
@@ -40,7 +40,7 @@ FocusScope {
   
   FontLoader { id: titleFont; source: "assets/fonts/Nintendo_Switch_UI_Font.ttf" }
   
-  property var currentPage : 'ListPage';
+  property var currentPage : 'HomePage';
   
   property var themeLight : {
       "background": "#ebebeb",
@@ -101,12 +101,40 @@ FocusScope {
   }   
   
   property var systemGradients : {
-      "snes": "#b95264",
-      "gb": "#acc641",
-      "mastersystem": "#23294c",
-      "genesis":"#175498"
+    "atari2600": "#8b511d",
+    "doom": "#d52307",
+    "dosbox": "#c1bd9b",
+    "dreamcast": "#e78b1b",
+    "fba": "#a52233",
+    "fbn": "#a52233",
+    "gb": "#acc641",
+    "gamegear": "#b06502",
+    "gba": "#fdd30d",
+    "gbc": "#2d8d33",
+    "genesis": "#175498",
+    "mame": "#2f3f93",
+    "mastersystem": "#23294c",
+    "n64": "#ed2438",
+    "nds": "#f3fcc0",
+    "neogeo": "#6b1d1c",
+    "neogeocd": "white",
+    "neogeopocket": "white",
+    "nes": "#d91c00",
+    "pcengine": "#6b1d1c",
+    "playstation": "white",
+    "pokemini": "#f8d326",
+    "psp": "#87e4dd",
+    "scummvm": "white",
+    "sega32x": "#52607b",
+    "segacd": "#466efd",
+    "snes": "#f60116",
+    "wonderswan": "white"
   }   
     
+    
+  function randomColor(){
+    return '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
+  }
   
   function toggleDarkMode(){
     if(theme === themeLight){

@@ -139,7 +139,7 @@ import QtQuick 2.12
                                   width: parent.width
                                   height: parent.height
                                   color:"#000"
-                                  opacity:.2
+                                  opacity:.3
                                 }
                                 
                                   Canvas {
@@ -267,6 +267,21 @@ import QtQuick 2.12
                                   }
                                   
                                   Image {
+                                      id: systems__img_mascot
+                                      width: 300 
+                                      height: 400   
+                                      sourceSize { width: 300; }                                    
+                                      fillMode: Image.PreserveAspectFit
+                                      source: "../assets/images/mascot/"+modelData.shortName+".png"
+                                      asynchronous: true      
+                                      anchors.bottom: parent.bottom                                 
+                                      anchors.left: parent.left    
+                                      anchors.bottomMargin: 0    
+                                      anchors.leftMargin: 40   
+                                    }                                  
+                                  
+                                  
+                                  Image {
                                       id: systems__img_logos
                                       width: 200    
                                       sourceSize { width: 200; }                                    
@@ -276,8 +291,29 @@ import QtQuick 2.12
                                       anchors.bottom: parent.bottom                                 
                                       anchors.right: parent.right    
                                       anchors.bottomMargin: 100    
-                                      anchors.rightMargin: 40                          
+                                      anchors.rightMargin: 40  
+                                      // Text{
+                                      //   id: systems__name
+                                      //   anchors.bottom: systems__img_logos.bottom
+                                      //   anchors.horizontalCenter: parent.horizontalCenter 
+                                      //   font.pixelSize: 14
+                                      //   text:  modelData.shortName
+                                      //   color:"white"
+                                      // }
+                                       
+                                      // Text{
+                                      //   id: systems__number_games
+                                      //   anchors.top: systems__img_logos.bottom
+                                      //   anchors.topMargin: 6
+                                      //   anchors.horizontalCenter: parent.horizontalCenter 
+                                      //   font.pixelSize: 14
+                                      //   text:  "Games: "+modelData.games.count
+                                      //   color:"white"
+                                      // }
+                                                             
                                   }     
+                                  
+                                  
                                                                                                                      
                                                                                  
                               }
