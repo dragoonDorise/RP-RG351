@@ -37,7 +37,7 @@ In this list you can see all the games in the System selected in the Home Screen
 - A - Launchs the Game
 - B - Goes back to the Home Page
 - X - Toggles a Game as favorite
-- Y - Activates Search mode ( You might need to press R2 Twice )
+- Y - Activates Search mode ( You might need to press Y Twice )
 - L1 - Changes the Game List to the previous System
 - R1 - Changes the Game List to the next System
 
