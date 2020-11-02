@@ -14,7 +14,7 @@ import QtQuick 2.12
           searchValue=''
           // header__search_input.focus = false
           // gameView.focus = true 
-          
+          header.height=0 
           header__search_input.text='Search...'
           navigate('HomePage');
           return;
@@ -24,9 +24,9 @@ import QtQuick 2.12
  
     Rectangle {
         id: header
-        color: Qt.rgba(0, 0, 0, .5)
+        color: headerCSS.background
         width: headerCSS.width
-        height: 50
+        height: headerCSS.height
         anchors.top: parent.top
         // visible:false
         clip:true
@@ -36,9 +36,9 @@ import QtQuick 2.12
           anchors.top: parent.top
           anchors.left: parent.left
           anchors.topMargin: 0
-          anchors.leftMargin: 30          
+          anchors.leftMargin: 20          
           color:"transparent"
-          width:parent.width-48
+          width:parent.width-40
           height: 40
           
           Rectangle{
@@ -81,7 +81,7 @@ import QtQuick 2.12
             anchors.top: parent.top
             anchors.right: parent.right
             height: 32
-            width:300
+            width:parent.width
             
             Rectangle{
               id: header__search
@@ -89,7 +89,7 @@ import QtQuick 2.12
               anchors.top: parent.top
               anchors.topMargin: 10 
               anchors.right: parent.right
-              width:200
+              width:parent.width
               height: 30 
               //anchors.verticalCenter: parent.verticalCenter                
               border.color: theme.text
@@ -108,7 +108,7 @@ import QtQuick 2.12
                     anchors.rightMargin: 6 
                     visible: currentPage === 'ListPage' ? 1 : 0            
                     Text{
-                         text:"R2"
+                         text:"Y"
                          color:"white"                    
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.horizontalCenter: parent.horizontalCenter
@@ -166,22 +166,19 @@ import QtQuick 2.12
        
     Rectangle {
         id: main
-        color: Qt.rgba(0, 0, 0, .5)
+        color: mainCSS.background
         width: wrapperCSS.width
         height: mainCSS.height
         anchors.top: header.bottom
         
         Rectangle {
             id: games
-            visible: true
             color: "transparent"
-            width: parent.width
+            width: parent.width*0.5
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.bottom: parent.bottom
-        
-             
-            
+            anchors.topMargin: 20
+            height:parent.height-20-anchors.topMargin
             ListView {
                 id: gameView
                 width: parent.width;
@@ -196,7 +193,7 @@ import QtQuick 2.12
                 focus: currentPage === 'ListPage' ? true : false ;
                 
                 snapMode: ListView.SnapOneItem
-                highlightRangeMode: ListView.StrictlyEnforceRange
+                // highlightRangeMode: ListView.StrictlyEnforceRange
                 
                 // Keys.onUpPressed:       { moveCurrentIndexUp();navSound.play(); }
                 // Keys.onDownPressed:     { moveCurrentIndexDown();navSound.play(); }
@@ -207,12 +204,14 @@ import QtQuick 2.12
                 
                 Component {
                     id: gameViewDelegate 
+
                     Item
                     {
-                      height:20
+                      height:40                      
                       id: delegateContainer
-                      property bool selected: delegateContainer.GridView.isCurrentItem
+                      property bool selected: delegateContainer.ListView.isCurrentItem
                       property var gameViewStyle : 'standard'
+                      
                       Keys.onPressed: {
                         //Launch game
                         if (api.keys.isAccept(event)) {
@@ -226,7 +225,17 @@ import QtQuick 2.12
                         //toggleItemsRow     
                         if (api.keys.isFilters(event)) {
                             event.accepted = true;
-                            toggleItemsRow();
+                           
+                            
+                            if (header.height == 50){
+                              header.height=0  
+                            }else{
+                               header.height=50
+                               searchValue = ''
+                               header__search_input.clear()            
+                               header__search_input.focus = true
+                               
+                            }
                             
                             toggleSound.play()
                             //Show only current favs, not working right now...
@@ -252,8 +261,7 @@ import QtQuick 2.12
                         if (api.keys.isNextPage(event)) {
                             event.accepted = true;
                             goBackSound.play()
-                            currentCollectionIndex = currentCollectionIndex+1
-                           
+                            currentCollectionIndex = currentCollectionIndex+1                           
                             return;
                         }  
                         
@@ -280,79 +288,50 @@ import QtQuick 2.12
                                     
                       }                          
                     
-                    
-                    
                       Rectangle{
                         color:"transparent"
-                        height: 20
-                                                
-                        Text{
-                          text: currentCollection.name
-                          anchors.left: header__system_logo.right
-                          anchors.leftMargin: 12
-                          color: selected ? "orange" : "white"
-                          font.pixelSize: 22
-                          anchors.verticalCenter: parent.verticalCenter
-                          width:300       
-                          elide: Text.ElideRight       
-                        }
+                        height: parent.height
+                        width:parent.width
 
-                        
-                        
-                        Canvas {
-                            id: game__is_fav
-                            // canvas size
-                            width: 10; height: 10;
-                            opacity:0.8
-                            anchors {
-                                left: parent.left; 
-                                top: parent.top;
-                            }
-                            anchors.leftMargin: 4
-                            anchors.topMargin: 4                          
-                            visible: modelData.favorite && currentCollection.shortName !== "all-favorites"                            
-                            // handler to override for drawing
-                            onPaint: {
-                                // get context to draw with
-                                var ctx = getContext("2d")
-                                var gradient = ctx.createLinearGradient(100,0,100,200)
-                                gradient.addColorStop(0, "#b12c19")
-                                // setup the fill
-                                ctx.fillStyle = gradient
-                               // ctx.fillRect(50,50,100,100)
-                                // begin a new path to draw
-                                ctx.beginPath()
-                                // top-left start point
-                                ctx.moveTo(0,0)
-                                // upper line
-                                ctx.lineTo(60,0)
-                                // right line
-                                ctx.lineTo(0,60)
-                                // bottom line
-                                ctx.lineTo(0,0)
-                                // left line through path closing
-                                ctx.closePath()
-                                // fill using fill style
-                                ctx.fill()
-                            }
-                            Image {              
-                                width: 24
-                                fillMode: Image.PreserveAspectFit
-                                source: focus ? "../assets/icons/heart_solid.svg" : "../assets/icons/heart_solid.svg"
-                                asynchronous: true     
-                                   
-                                anchors {
-                                    left: parent.left; 
-                                    top: parent.top;
-                                }
-                                anchors.leftMargin: 6
-                                anchors.topMargin: 6                          
-                            }    
-                            
-                        }                        
+                          Rectangle{
+                              id: game_selected
+                              width:game_title.width
+                              height:game_title.height
+                              color:"#936a8e"
+                              visible: selected ? true : false                          
+                          }                
+                          
+                          Text {
+                            id: game_title
+                              text: modelData.title                
+                              // white, 20px, condensed font
+                              color: "white"
+                              //font.family: globalFonts.condensed
+                              font.pixelSize: 20
+                              verticalAlignment: Text.AlignVCenter
+                              elide: Text.ElideRight
+                              
+                              Image {              
+                                  width: 10
+                                  fillMode: Image.PreserveAspectFit
+                                  source: "../assets/icons/heart_solid.svg"
+                                  asynchronous: true     
+                                  visible: modelData.favorite && currentCollection.shortName !== "all-favorites" 
+                                  anchors {
+                                      left: parent.right; 
+                                      top: parent.top;
+                                  }
+                                  anchors.topMargin: 4
+                                  anchors.leftMargin: 4
+                              }    
+                              
+                          }                          
+                                             
                       }
                       
-                    }               
+                    }      
+                    
+                             
                 }
                                 
             }
@@ -360,6 +339,54 @@ import QtQuick 2.12
            
         }
         
+        Rectangle{
+          id:game_details
+          width: parent.width*0.5
+          color:"transparent"
+          anchors.left:games.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          
+          Image {
+              id: game_details_logo
+              width: 200    
+              sourceSize { width: 200; }                                    
+              fillMode: Image.PreserveAspectCrop
+              source: "../assets/images/logos/"+currentCollection.shortName+".png"
+              asynchronous: true      
+              anchors.top: parent.top   
+              anchors.right: parent.right  
+              anchors.topMargin: 40
+              anchors.rightMargin: 20          
+              
+              visible: currentPage === 'ListPage' ? true : false ;
+          }     
+          
+          Image {
+              id: game_screenshot
+              width: 250    
+              height: 250
+              fillMode: Image.PreserveAspectFit
+              anchors.top:game_details_logo.bottom
+              anchors.right: parent.right
+              anchors.topMargin: 20
+              anchors.rightMargin: 20          
+
+              asynchronous: true    
+              source: {
+                  if (currentCollection.shortName !== "android") {
+                      if (currentCollection.games.get(gameView.currentIndex).assets.screenshots[0]) {
+                          return currentCollection.games.get(gameView.currentIndex).assets.screenshots[0]
+                      }
+                      return ""
+                  }
+                  return ""
+              }                                                               
+          }      
+          
+          
+          
+        }
         
     }  
     

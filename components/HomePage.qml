@@ -4,16 +4,14 @@ import QtQuick 2.12
   Item{
     id: homepage  
   
-    HeaderHome{
-      id: header
-    }
+
     
     Rectangle {
         id: main
         color: mainCSS.background
         width: wrapperCSS.width
         height: mainCSS.height + headerHeightCorrection  // Zoom option
-        anchors.top: header.bottom
+        anchors.top: parent.top
         
         
         Rectangle{
@@ -33,7 +31,7 @@ import QtQuick 2.12
                 anchors.right: parent.right
                 anchors.top: systems.top
                 anchors.bottom: parent.bottom
-                model: api.collections
+                model: allCollections
                 delegate: systemsDelegate  
                 orientation: ListView.Horizontal
 
@@ -67,7 +65,7 @@ import QtQuick 2.12
                                 event.accepted = true;
                                 
                                 //We update the collection we want to browse
-                                currentCollectionIndex = systems__item_container.ListView.view.currentIndex+3
+                                currentCollectionIndex = systems__item_container.ListView.view.currentIndex
                                 //We change Pages
                                 navigate('ListPage');
                                 
@@ -292,53 +290,27 @@ import QtQuick 2.12
                                       anchors.right: parent.right    
                                       anchors.bottomMargin: 100    
                                       anchors.rightMargin: 40  
-                                      // Text{
-                                      //   id: systems__name
-                                      //   anchors.bottom: systems__img_logos.bottom
-                                      //   anchors.horizontalCenter: parent.horizontalCenter 
-                                      //   font.pixelSize: 14
-                                      //   text:  modelData.shortName
-                                      //   color:"white"
-                                      // }
-                                       
-                                      // Text{
-                                      //   id: systems__number_games
-                                      //   anchors.top: systems__img_logos.bottom
-                                      //   anchors.topMargin: 6
-                                      //   anchors.horizontalCenter: parent.horizontalCenter 
-                                      //   font.pixelSize: 14
-                                      //   text:  "Games: "+modelData.games.count
-                                      //   color:"white"
-                                      // }
-                                                             
+                                      visible: currentPage === 'HomePage' ? true : false ;
                                   }     
                                   
-                                  
+                                  Text{
+                                      text:modelData.name
+                                      color:"White"
+                                      anchors.bottom: parent.bottom                                 
+                                      anchors.right: parent.right    
+                                      anchors.bottomMargin: 100    
+                                      anchors.rightMargin: 40  
+                                      font.pixelSize:40
+                                      visible: modelData.shortName.indexOf('all-')>-1 ? true: false
+                                      font.family: globalFonts.condensed
+                                  }
                                                                                                                      
                                                                                  
                               }
-                              
-                              
-                              // Rectangle{
-                              //   id: systems__item_border
-                              //   width: parent.width
-                              //   height: parent.height
-                              //   border.color: systems__item_container.ListView.isCurrentItem ? "#10adc5" : wrapperCSS.background
-                              //   border.width: 4     
-                              //   color:"transparent"                                                     
-                              // }      
+   
                                                                                   
                           }
-                          
-                          // DropShadow {
-                          //     anchors.fill: systems__item
-                          //     horizontalOffset: 3
-                          //     verticalOffset: 3
-                          //     radius: 8.0
-                          //     samples: 17
-                          //     color: "#80000000"
-                          //     source: systems__item
-                          // }                        
+                     
                 
                       }
                   }      

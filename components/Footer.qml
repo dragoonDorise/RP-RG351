@@ -4,8 +4,7 @@ import QtQuick 2.12
         color: footerCSS.background
         width: footerCSS.width
         height: footerCSS.height
-        anchors.top: main.bottom
-        anchors.topMargin: -50
+        anchors.top: main.bottom       
         Rectangle{
           id: footer__border
           anchors.top: parent.top
@@ -87,7 +86,7 @@ import QtQuick 2.12
                 id: footer__legend_Y
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: footer__legend_A.left
-                anchors.rightMargin: 64
+                anchors.rightMargin: 72
                 Rectangle{
                     height:20
                     width:20
@@ -103,7 +102,7 @@ import QtQuick 2.12
                          anchors.horizontalCenter: parent.horizontalCenter
                     }
                     Text{
-                         text:"Zoom"
+                         text:"Search"
                          color: theme.text                       
                          anchors.verticalCenter: parent.verticalCenter
                          anchors.left: parent.right

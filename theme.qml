@@ -27,6 +27,8 @@ FocusScope {
           return api.allGames.get(allFavorites.mapToSource(currentGameIndex))
       if (currentCollection.shortName === "all-lastplayed")
           return api.allGames.get(allLastPlayed.mapToSource(currentGameIndex))
+      if (searchValue !== '')
+          return  api.allGames.get(searchGames.mapToSource(currentGameIndex))          
       return currentCollection.games.get(currentGameIndex)
   }
   
@@ -82,25 +84,28 @@ FocusScope {
   property var headerCSS : {
       "width": wrapperCSS.width,
       "height": 0,
-      "background": "transparent",
+      "background": Qt.rgba(0, 0, 0, .8),
   }
   
   
   property var footerCSS : {
       "width": wrapperCSS.width,
       "height": 50,
-      "background": "transparent",
+      "background": Qt.rgba(0, 0, 0, .8),
       
   }    
   
   property var mainCSS : {
       "width": wrapperCSS.width,
       "height": wrapperCSS.height - headerCSS.height - footerCSS.height,
-      "background": "transparent",
+      "background": Qt.rgba(0, 0, 0, .8),
       
   }   
   
   property var systemGradients : {
+    "all-allgames":"#f5ad02",
+    "all-lastplayed":"#3c4380",
+    "all-favorites":"#d74c6f",
     "atari2600": "#8b511d",
     "doom": "#d52307",
     "dosbox": "#c1bd9b",
@@ -131,6 +136,12 @@ FocusScope {
     "wonderswan": "white"
   }   
     
+  function showTitles(){
+    if ( currentCollection.shortName.includes('all-')){
+      return true
+    }
+    return false
+  }  
     
   function randomColor(){
     return '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
