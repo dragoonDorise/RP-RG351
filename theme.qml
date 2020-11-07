@@ -73,10 +73,10 @@ FocusScope {
   
   //Used to hide or show the header
   property var headerHeightCorrection: api.memory.get('headerHeightCorrection') === 90 ? 90 : 0;
-
+  property var rp2ratio : root.height === 480 ? 1.98 : 1.88
   property var wrapperCSS : {
       "width": 640,
-      "height": 480,
+      "height": vpx(480*rp2ratio),
       "background": theme.background,      
   }
   
@@ -90,7 +90,7 @@ FocusScope {
   
   property var footerCSS : {
       "width": wrapperCSS.width,
-      "height": 50,
+      "height": vpx(50*rp2ratio),
       "background": Qt.rgba(0, 0, 0, .8),
       
   }    
